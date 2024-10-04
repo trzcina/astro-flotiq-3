@@ -1,0 +1,21 @@
+---
+{/* Example with Static Site Generation (SSG) Mode */}
+import type { Blogpost } from "../../../flotiqApi/src";
+import { flotiq } from "../../lib/flotiq";
+
+export async function getStaticPaths() {
+  const posts = await flotiq.BlogPostAPI.list();
+  return posts.data?.map((post) => ({
+    params: { slug: post.slug },
+    props: post
+  })) || []
+}
+const post: Blogpost = Astro.props;
+---
+<html lang="en">
+  <title>{post.title}</title>
+  <body>
+    <h1>{post.title}</h1>
+    <div set:html={post.content}/>
+  </body>
+</html>
