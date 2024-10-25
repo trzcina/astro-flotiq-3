@@ -1,0 +1,31 @@
+---
+{/* Example with Server Side Rendering (SSR) Mode; Uncomment ./astro.config.mjs settings */}
+import type { Blogpost } from "flotiq-api-ts";
+import { flotiq } from "../../lib/flotiq";
+
+const { slug } = Astro.params;
+let post: Blogpost;
+
+const blogpostList = await flotiq.BlogPostAPI.list({
+  filters: JSON.stringify({
+    slug: {
+      type: 'equals',
+      filter: slug,
+    }
+  }),
+  limit: 1
+});
+
+if (blogpostList.data?.[0]) {
+  post = blogpostList.data[0]
+} else {
+  return Astro.redirect('/404');
+}
+---
+<html lang="en">
+  <title>{post.title}</title>
+  <body>
+    <h1>{post.title}</h1>
+    <div set:html={post.content}/>
+  </body>
+</html>
