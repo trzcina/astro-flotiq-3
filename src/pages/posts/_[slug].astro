@@ -6,7 +6,7 @@ import { flotiq } from "../../lib/flotiq";
 const { slug } = Astro.params;
 let post: Blogpost;
 
-const blogpostList = await flotiq.BlogPostAPI.list({
+const blogpostList = await flotiq.BlogpostAPI.list({
   filters: JSON.stringify({
     slug: {
       type: 'equals',
