@@ -4,7 +4,8 @@ import type { Blogpost } from "flotiq-api-ts";
 import { flotiq } from "../../lib/flotiq";
 
 export async function getStaticPaths() {
-  const posts = await flotiq.BlogpostAPI.list();
+  // const posts = await flotiq.BlogpostAPI.list();
+  const posts = await flotiq.blogpost.list();
   return posts.data?.map((post) => ({
     params: { slug: post.slug },
     props: post
